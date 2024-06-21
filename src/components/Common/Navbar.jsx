@@ -1,9 +1,10 @@
 import { useDebounce } from "@uidotdev/usehooks";
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { fetchNews } from "../../hooks/useNewsData";
-import { setLoading, setNewsData } from "../../features/newsDataSlice";
+import { setLoading } from "../../features/newsDataSlice";
 import { useDispatch } from "react-redux";
+import { CiSaveDown2 } from "react-icons/ci";
 
 function Navbar() {
   const [category, setCategory] = useState("All");
@@ -31,14 +32,21 @@ function Navbar() {
         <h1 className="font-extrabold text-2xl text-gray-700">
           React News Portal
         </h1>
-        <div className="flex gap-2 flex-wrap justify-center">
+        <div className="flex gap-2 flex-wrap justify-center w-[30rem]">
           <input
             type="text"
             placeholder="Search for Topic"
-            className="p-2 rounded-full bg-gray-200"
+            className="p-2 rounded-full bg-gray-200 w-full"
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
+        <Link
+          to={"/favourites"}
+          className="flex flex-col items-center justify-center"
+        >
+          <CiSaveDown2 size={40} />
+          <p className="font-bold">Favorite News</p>
+        </Link>
       </div>
       <div className="flex gap-4 justify-center items-center flex-wrap md:divide-x-2 md:divide-black">
         <NavLink
