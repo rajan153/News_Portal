@@ -1,13 +1,14 @@
 import { useDebounce } from "@uidotdev/usehooks";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { fetchNews } from "../../hooks/useNewsData";
 import { setLoading } from "../../features/newsDataSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CiSaveDown2 } from "react-icons/ci";
 
 function Navbar() {
   const [category, setCategory] = useState("All");
+  const { favoriteNews } = useSelector((state) => state.favoriteNews);
   const [query, setQuery] = useState("");
   const dispatch = useDispatch();
 
@@ -19,14 +20,13 @@ function Navbar() {
     [query]
   );
 
-  const localFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  // const localFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
   function sendData(category, query) {
     fetchNews(category, query, 1);
     dispatch(setLoading(false));
   }
 
   sendData(category, query);
-
 
   return (
     <div className="p-4 flex flex-col border-b border-gray-400 gap-3 shadow-md">
@@ -47,9 +47,9 @@ function Navbar() {
           className="flex flex-col items-center justify-center relative"
         >
           <div className="absolute top-0">
-            {localFavorites.length !== 0 && (
+            {favoriteNews.length !== 0 && (
               <p className="px-2 rounded-full bg-red-500 text-white">
-                {localFavorites.length}
+                {favoriteNews.length}
               </p>
             )}
           </div>

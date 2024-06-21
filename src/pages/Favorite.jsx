@@ -1,12 +1,13 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React from "react";
 import Card from "../components/Cards/Card";
+import { useSelector } from "react-redux";
 
 function Favorite() {
-  const localFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  
+  const { favoriteNews } = useSelector((state) => state.favoriteNews);
+
   return (
-    <div>
-      {localFavorites.length === 0 ? (
+    <div className="m-4">
+      {favoriteNews.length === 0 ? (
         <div>
           <h1 className="text-center text-2xl font-bold mt-8">
             No favorites added
@@ -14,7 +15,7 @@ function Favorite() {
         </div>
       ) : (
         <div>
-          {localFavorites.map((item, index) => (
+          {favoriteNews.map((item, index) => (
             <Card
               key={index}
               name={item.title}
