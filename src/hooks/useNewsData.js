@@ -20,7 +20,7 @@ export function fetchNews(category, query = "", currentPage = 1) {
     axios
       .get("https://newsapi.org/v2/top-headlines", {
         params: {
-          apiKey: "6302d239d33a49b7806fea072ec3013b",
+          apiKey: import.meta.env.VITE_NEWS_API_KEY,
           country: "in",
           page: currentPage,
           pageSize: pageSize,
