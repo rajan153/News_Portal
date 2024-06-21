@@ -19,12 +19,14 @@ function Navbar() {
     [query]
   );
 
+  const localFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
   function sendData(category, query) {
     fetchNews(category, query, 1);
     dispatch(setLoading(false));
   }
 
   sendData(category, query);
+
 
   return (
     <div className="p-4 flex flex-col border-b border-gray-400 gap-3 shadow-md">
@@ -42,8 +44,15 @@ function Navbar() {
         </div>
         <Link
           to={"/favourites"}
-          className="flex flex-col items-center justify-center"
+          className="flex flex-col items-center justify-center relative"
         >
+          <div className="absolute top-0">
+            {localFavorites.length !== 0 && (
+              <p className="px-2 rounded-full bg-red-500 text-white">
+                {localFavorites.length}
+              </p>
+            )}
+          </div>
           <CiSaveDown2 size={40} />
           <p className="font-bold">Favorite News</p>
         </Link>

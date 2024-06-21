@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Card from "../components/Cards/Card";
 
 function Favorite() {
-  const [favorites, setFavorites] = useState([]);
   const localFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-  useEffect(() => {
-    setFavorites(localFavorites);
-  }, [localFavorites]);
+  
   return (
     <div>
-      {favorites.length === 0 ? (
+      {localFavorites.length === 0 ? (
         <div>
           <h1 className="text-center text-2xl font-bold mt-8">
             No favorites added
@@ -17,7 +14,7 @@ function Favorite() {
         </div>
       ) : (
         <div>
-          {favorites.map((item, index) => (
+          {localFavorites.map((item, index) => (
             <Card
               key={index}
               name={item.title}

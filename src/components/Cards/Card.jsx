@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 function Card({ name, type, image, id }) {
-  const [favorites, setFavorites] = useState([]); // [1
+  const [favorites, setFavorites] = useState([]);
   const { data } = useSelector((state) => state.newsData);
 
   const handleFavorite = (news) => {
