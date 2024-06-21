@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import newsDataSlice from "../features/newsDataSlice";
-import favouriteNewsSlice from "../features/favouriteNewsSlice";
+import favoriteNewsSlice from "../features/favoriteNewsSlice";
 
 const store = configureStore({
   reducer: {
     newsData: newsDataSlice,
-    favouriteData: favouriteNewsSlice,
+    favoriteData: favoriteNewsSlice,
   },
 });
 
