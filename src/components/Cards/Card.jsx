@@ -20,7 +20,7 @@ function Card({ name, type, image, id }) {
       );
       setFavorites(newFavorites);
       localStorage.setItem("favorites", JSON.stringify(newFavorites));
-      toast.error("News removed from favorites");
+      toast.success("News removed from favorites");
     } else {
       // For Duplicate News
       if (!favorites.includes(newData)) {
