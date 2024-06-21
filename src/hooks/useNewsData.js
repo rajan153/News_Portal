@@ -1,23 +1,45 @@
 import axios from "axios";
+import { useEffect, useState } from "react";
+import {
+  setCurrentPage,
+  setNewsData,
+  setTotalPages,
+} from "../features/newsDataSlice";
+import { useDispatch } from "react-redux";
 
-export async function fetchNews(category, searchKey) {
-  const country = "in";
-  const apiKey = `d7c898c18cd84514af021d89d8365459`;
-  let url = `https://newsapi.org/v2/top-headlines?`;
+export function fetchNews(category, query = "", currentPage = 1) {
+  const pageSize = 10;
+  const [totalResult, setTotalResult] = useState(0);
+  const dispatch = useDispatch();
 
-  if (searchKey) {
-    url += `q=${searchKey}&`;
+  if (category === "All") {
+    category = "";
   }
 
-  url += `country=${country}&`;
-
-  if (category != "All-News") {
-    url += `category=${category}&`;
-  }
-
-  url += `apiKey=${apiKey}`;
-  console.log(url);
-  const response = await axios.get(url);
-
-  return response;
+  useEffect(() => {
+    axios
+      .get("https://newsapi.org/v2/top-headlines", {
+        params: {
+          apiKey: "6302d239d33a49b7806fea072ec3013b",
+          country: "in",
+          page: currentPage,
+          pageSize: pageSize,
+          category: category,
+          q: query,
+        },
+      })
+      .then((response) => {
+        dispatch(
+          setNewsData(
+            response.data.articles.filter(
+              (article) => article.urlToImage !== null
+            )
+          )
+        );
+        setTotalResult(response.data.totalResults);
+        dispatch(setTotalPages(Math.ceil(totalResult / pageSize)));
+        dispatch(setCurrentPage(currentPage));
+      })
+      .catch((err) => console.error("Error while fetching the news", err));
+  }, [currentPage, category, query]);
 }
